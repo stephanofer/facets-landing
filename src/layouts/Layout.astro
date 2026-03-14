@@ -1,3 +1,7 @@
+---
+import Header from "@/components/Header.astro";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,16 +9,51 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>Facets</title>
   </head>
   <body>
+    <Header />
     <slot />
   </body>
 </html>
 
 <style is:global>
   @import "tailwindcss";
+
+  @font-face {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/inter-latin-400-normal.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/fonts/inter-latin-500-normal.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: ClashDisplay;
+    font-style: normal;
+    font-weight: 200 900;
+    font-display: swap;
+    src: url("/fonts/ClashDisplay-Variable.woff2") format("woff2");
+  }
+
+  @theme {
+    --font-display: "ClashDisplay", sans-serif;
+    --font-body: "Inter", sans-serif;
+  }
+
+  @layer base {
+    body {
+      font-family: var(--font-body);
+    }
+  }
 
   html,
   body {
