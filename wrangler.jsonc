@@ -12,5 +12,11 @@
 	"observability": {
 		"enabled": true
 	},
-	"$schema": "node_modules/wrangler/config-schema.json"
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "ebf320f81eb344129c80d1e12e6d27d4"
+		}
+	]
 }
