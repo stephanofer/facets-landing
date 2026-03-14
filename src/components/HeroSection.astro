@@ -139,44 +139,7 @@
 <script>
   import { gsap } from "gsap";
 
-  const title = document.getElementById("hero-title")!;
-  const subtitle = document.getElementById("hero-subtitle")!;
-  const buttons = document.getElementById("hero-buttons")!;
   const floatingCards = document.querySelectorAll(".floating-card");
-  const mobileCards = document.querySelectorAll(".mobile-card");
-
-  gsap.set([title, subtitle, buttons], { opacity: 0, y: 25 });
-  gsap.set(floatingCards, { opacity: 0, scale: 0.95 });
-  gsap.set(mobileCards, { opacity: 0, y: 12 });
-
-  const tl = gsap.timeline({
-    defaults: { ease: "power3.out" },
-    delay: 0.1,
-  });
-
-  tl.to(title, { opacity: 1, y: 0, duration: 0.7 })
-    .to(subtitle, { opacity: 1, y: 0, duration: 0.5 }, "-=0.35")
-    .to(buttons, { opacity: 1, y: 0, duration: 0.5 }, "-=0.25")
-    .to(
-      floatingCards,
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 0.6,
-        stagger: 0.1,
-      },
-      "-=0.3"
-    )
-    .to(
-      mobileCards,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        stagger: 0.07,
-      },
-      "-=0.4"
-    );
 
   floatingCards.forEach((card, i) => {
     gsap.to(card, {
