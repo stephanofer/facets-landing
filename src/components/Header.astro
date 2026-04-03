@@ -1,36 +1,38 @@
 ---
 import logo from "@/assets/logo.png";
+import SignInIcon from "../assets/icons/sign-in.svg";
+import UserCircleIcon from "../assets/icons/user-circle.svg";
 ---
 
 <header id="main-header" class="fixed top-0 left-0 right-0 z-50">
   <div class="header-bg absolute inset-0 bg-bg/80 backdrop-blur-md border-b border-white/5"></div>
   <div class="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
     <!-- Logo -->
-    <a href="/" class="flex-shrink-0 relative z-10">
-      <img src={logo.src} alt="Facets" class="h-7 md:h-8 w-auto" />
+    <a href="/" class="flex-shrink-0 relative z-10 block">
+      <img src={logo.src} alt="Facetas" width={logo.width} height={logo.height} loading="eager" decoding="async" class="block h-7 md:h-8 w-auto" />
     </a>
 
     <!-- Desktop Nav -->
     <nav class="hidden md:flex items-center gap-8">
-      <a href="#features" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Features</a>
-      <a href="#pricing" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Pricing</a>
-      <a href="#about" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">About</a>
+      <a href="#features" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Funciones</a>
+      <a href="#pricing" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Precios</a>
+      <a href="#about" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Nosotros</a>
     </nav>
 
     <!-- Desktop CTA -->
     <div class="hidden md:flex items-center gap-5">
       <a href="#signin" class="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-        Sign In
+        <SignInIcon class="h-4 w-4 shrink-0" fill="currentColor" />
+        Iniciar sesión
       </a>
       <a href="#signup" class="group flex items-center gap-2 text-sm px-5 py-2.5 rounded-full border border-white/15 text-white/90 hover:border-primary hover:text-primary hover:shadow-[0_0_20px_rgba(212,239,92,0.15)] transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-        Sign Up
+        <UserCircleIcon class="h-[15px] w-[15px] shrink-0" fill="currentColor" />
+        Crear cuenta
       </a>
     </div>
 
     <!-- Mobile Hamburger -->
-    <button id="menu-toggle" class="md:hidden relative z-10 w-10 h-10 flex items-center justify-center" aria-label="Toggle menu">
+    <button id="menu-toggle" class="md:hidden relative z-10 w-10 h-10 flex items-center justify-center" aria-label="Abrir menú">
       <div class="relative w-6 h-5">
         <span id="bar1" class="absolute left-0 top-0 w-full h-[2px] bg-white rounded-full"></span>
         <span id="bar2" class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-white rounded-full"></span>
@@ -44,18 +46,18 @@ import logo from "@/assets/logo.png";
     <div id="menu-backdrop" class="absolute inset-0 bg-bg/98 backdrop-blur-xl opacity-0"></div>
     <div class="relative h-full flex flex-col justify-between px-6 pt-8 pb-10">
       <nav class="flex flex-col gap-1">
-        <a href="#features" class="mobile-link opacity-0 text-2xl font-display font-medium text-white/90 hover:text-primary py-3 transition-colors duration-300">Features</a>
-        <a href="#pricing" class="mobile-link opacity-0 text-2xl font-display font-medium text-white/90 hover:text-primary py-3 transition-colors duration-300">Pricing</a>
-        <a href="#about" class="mobile-link opacity-0 text-2xl font-display font-medium text-white/90 hover:text-primary py-3 transition-colors duration-300">About</a>
+        <a href="#features" class="mobile-link opacity-0 text-2xl font-display font-medium text-white/90 hover:text-primary py-3 transition-colors duration-300">Funciones</a>
+        <a href="#pricing" class="mobile-link opacity-0 text-2xl font-display font-medium text-white/90 hover:text-primary py-3 transition-colors duration-300">Precios</a>
+        <a href="#about" class="mobile-link opacity-0 text-2xl font-display font-medium text-white/90 hover:text-primary py-3 transition-colors duration-300">Nosotros</a>
       </nav>
       <div class="flex flex-col gap-3 mobile-cta opacity-0">
         <a href="#signin" class="flex items-center justify-center gap-2 text-base text-white/80 hover:text-white py-3 border border-white/10 rounded-2xl transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-          Sign In
+          <SignInIcon class="h-[18px] w-[18px] shrink-0" fill="currentColor" />
+          Iniciar sesión
         </a>
         <a href="#signup" class="flex items-center justify-center gap-2 text-base font-medium bg-primary text-bg py-3.5 rounded-2xl hover:bg-primary/90 transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-          Sign Up
+          <UserCircleIcon class="h-[18px] w-[18px] shrink-0" fill="currentColor" />
+          Crear cuenta
         </a>
       </div>
     </div>
