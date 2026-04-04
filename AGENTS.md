@@ -12,3 +12,6 @@ Facets simplifica la complejidad financiera para que puedas tomar mejores decisi
 | **Landing** | `src/` | Astro build (Static), Tailwind, GSAP|
 
 ---
+
+
+Importante no quiero que abras nunca tu el dev server, yo me encargo de eso

@@ -1,0 +1,120 @@
+---
+import featureImg from "../assets/feature.avif";
+---
+
+<section id="features" class="relative py-12 overflow-hidden" style="background-color: #ffffff;">
+  <!-- Header -->
+  <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 text-center mb-10 sm:mb-14 lg:mb-16">
+    <h2 class="font-display font-semibold text-2xl leading-[1.1] sm:text-3xl md:text-4xl lg:text-[2.75rem] tracking-tight text-[#0f0f0f] mb-3 sm:mb-4">
+      Todo lo que necesitas,<br />en una sola app
+    </h2>
+  </div>
+
+  <!-- Phone Mockups — Desktop (lg+): 4 in a row, staggered up-down-up-down -->
+  <div class="hidden lg:flex justify-center items-start gap-6 xl:gap-8 max-w-7xl mx-auto px-8">
+    <div class="feature-phone mt-0 transition-transform duration-500">
+      <div class="rounded-[2.5rem] overflow-hidden">
+        <img src={featureImg.src} alt="Feature 1" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[340px] xl:w-[380px] h-auto object-cover" />
+      </div>
+    </div>
+    <div class="feature-phone mt-10 transition-transform duration-500">
+      <div class="rounded-[2.5rem] overflow-hidden">
+        <img src={featureImg.src} alt="Feature 2" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[340px] xl:w-[380px] h-auto object-cover" />
+      </div>
+    </div>
+    <div class="feature-phone mt-0 transition-transform duration-500">
+      <div class="rounded-[2.5rem] overflow-hidden">
+        <img src={featureImg.src} alt="Feature 3" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[340px] xl:w-[380px] h-auto object-cover" />
+      </div>
+    </div>
+    <div class="feature-phone mt-10 transition-transform duration-500">
+      <div class="rounded-[2.5rem] overflow-hidden">
+        <img src={featureImg.src} alt="Feature 4" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[340px] xl:w-[380px] h-auto object-cover" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone Mockups — Mobile/Tablet (<lg): horizontal scroll, 2 visible, staggered -->
+  <div class="lg:hidden relative px-5 sm:px-6">
+    <div class="features-scroll flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 -mx-5 px-5 sm:-mx-6 sm:px-6" style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
+      <div class="feature-phone-mobile snap-center flex-shrink-0 mt-0">
+        <div class="rounded-[2rem] overflow-hidden">
+          <img src={featureImg.src} alt="Feature 1" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[220px] sm:w-[250px] h-auto object-cover" />
+        </div>
+      </div>
+      <div class="feature-phone-mobile snap-center flex-shrink-0 mt-6">
+        <div class="rounded-[2rem] overflow-hidden">
+          <img src={featureImg.src} alt="Feature 2" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[220px] sm:w-[250px] h-auto object-cover" />
+        </div>
+      </div>
+      <div class="feature-phone-mobile snap-center flex-shrink-0 mt-0">
+        <div class="rounded-[2rem] overflow-hidden">
+          <img src={featureImg.src} alt="Feature 3" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[220px] sm:w-[250px] h-auto object-cover" />
+        </div>
+      </div>
+      <div class="feature-phone-mobile snap-center flex-shrink-0 mt-6">
+        <div class="rounded-[2rem] overflow-hidden">
+          <img src={featureImg.src} alt="Feature 4" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[220px] sm:w-[250px] h-auto object-cover" />
+        </div>
+      </div>
+    </div>
+    <!-- Scroll dots -->
+    <div class="flex justify-center gap-2 mt-5">
+      <span class="scroll-dot w-2 h-2 rounded-full bg-[#0f0f0f]/40 transition-all duration-300"></span>
+      <span class="scroll-dot w-2 h-2 rounded-full bg-[#0f0f0f]/15 transition-all duration-300"></span>
+      <span class="scroll-dot w-2 h-2 rounded-full bg-[#0f0f0f]/15 transition-all duration-300"></span>
+      <span class="scroll-dot w-2 h-2 rounded-full bg-[#0f0f0f]/15 transition-all duration-300"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .feature-phone {
+    will-change: transform;
+  }
+
+  .feature-phone:hover {
+    transform: translateY(-8px);
+  }
+
+  .scroll-dot.active {
+    background-color: rgba(15, 15, 15, 0.5);
+    transform: scale(1.4);
+  }
+</style>
+
+<script>
+  const scrollContainer = document.querySelector(".features-scroll");
+  const dots = document.querySelectorAll(".scroll-dot");
+  const mobileItems = document.querySelectorAll(".feature-phone-mobile");
+
+  if (scrollContainer && dots.length && mobileItems.length) {
+    const updateDots = () => {
+      const containerRect = scrollContainer.getBoundingClientRect();
+      const containerCenter = containerRect.left + containerRect.width / 2;
+      let closestIndex = 0;
+      let closestDist = Infinity;
+
+      mobileItems.forEach((item, i) => {
+        const rect = item.getBoundingClientRect();
+        const itemCenter = rect.left + rect.width / 2;
+        const dist = Math.abs(itemCenter - containerCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIndex = i;
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === closestIndex);
+      });
+    };
+
+    scrollContainer.addEventListener("scroll", updateDots, { passive: true });
+    updateDots();
+  }
+</script>
