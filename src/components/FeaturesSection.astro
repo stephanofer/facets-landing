@@ -36,7 +36,7 @@ import featureImg from "../assets/feature.avif";
 
   <!-- Phone Mockups — Mobile/Tablet (<lg): horizontal scroll, 2 visible, staggered -->
   <div class="lg:hidden relative px-5 sm:px-6">
-    <div class="features-scroll flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 -mx-5 px-5 sm:-mx-6 sm:px-6" style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
+    <div class="features-scroll flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 -mx-5 px-5 sm:-mx-6 sm:px-6" style="-webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain;">
       <div class="feature-phone-mobile snap-center flex-shrink-0 mt-0">
         <div class="rounded-[2rem] overflow-hidden">
           <img src={featureImg.src} alt="Feature 1" width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" class="w-[220px] sm:w-[250px] h-auto object-cover" />
@@ -81,6 +81,10 @@ import featureImg from "../assets/feature.avif";
     transform: translateY(-8px);
   }
 
+  .feature-phone-mobile {
+    scroll-snap-stop: always;
+  }
+
   .scroll-dot.active {
     background-color: rgba(15, 15, 15, 0.5);
     transform: scale(1.4);
@@ -93,7 +97,9 @@ import featureImg from "../assets/feature.avif";
   const mobileItems = document.querySelectorAll(".feature-phone-mobile");
 
   if (scrollContainer && dots.length && mobileItems.length) {
-    const updateDots = () => {
+    let snapTimeout;
+
+    const getClosestIndex = () => {
       const containerRect = scrollContainer.getBoundingClientRect();
       const containerCenter = containerRect.left + containerRect.width / 2;
       let closestIndex = 0;
@@ -103,18 +109,48 @@ import featureImg from "../assets/feature.avif";
         const rect = item.getBoundingClientRect();
         const itemCenter = rect.left + rect.width / 2;
         const dist = Math.abs(itemCenter - containerCenter);
+
         if (dist < closestDist) {
           closestDist = dist;
           closestIndex = i;
         }
       });
 
+      return closestIndex;
+    };
+
+    const updateDots = () => {
+      const closestIndex = getClosestIndex();
+
       dots.forEach((dot, i) => {
         dot.classList.toggle("active", i === closestIndex);
       });
     };
 
-    scrollContainer.addEventListener("scroll", updateDots, { passive: true });
+    const snapToClosest = () => {
+      const closestIndex = getClosestIndex();
+      const targetItem = mobileItems[closestIndex];
+      const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      const targetLeft = Math.max(
+        0,
+        Math.min(
+          maxScrollLeft,
+          targetItem.offsetLeft - (scrollContainer.clientWidth - targetItem.clientWidth) / 2,
+        ),
+      );
+
+      if (Math.abs(scrollContainer.scrollLeft - targetLeft) > 4) {
+        scrollContainer.scrollTo({ left: targetLeft, behavior: "smooth" });
+      }
+    };
+
+    const handleScroll = () => {
+      updateDots();
+      clearTimeout(snapTimeout);
+      snapTimeout = setTimeout(snapToClosest, 90);
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
     updateDots();
   }
 </script>

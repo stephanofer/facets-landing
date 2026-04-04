@@ -15,3 +15,5 @@ Facets simplifica la complejidad financiera para que puedas tomar mejores decisi
 
 
 Importante no quiero que abras nunca tu el dev server, yo me encargo de eso
+
+Ignora cualquier error que te de el linter sobre el tipado del editor
