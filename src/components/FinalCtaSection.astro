@@ -1,0 +1,29 @@
+---
+import QrCodeIcon from "@/assets/icons/qr-code.svg";
+---
+
+<section class="relative overflow-hidden bg-black px-5 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+    <div class="absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.06] sm:h-[360px] sm:w-[360px]"></div>
+    <div class="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04] sm:h-[540px] sm:w-[540px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,239,92,0.08),transparent_42%)]"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-[1400px] rounded-[2rem] px-6 py-8 shadow-[0_20px_80px_rgba(0,0,0,0.28)] backdrop-blur-sm sm:px-8 sm:py-10 lg:px-10 lg:py-12 xl:px-12">
+    <div class="text-center">
+      <h2 class="font-display text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl md:text-6xl">
+        Empieza ahora gratis
+      </h2>
+      <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/55 sm:mt-5 sm:text-base">
+        Organiza tus finanzas en minutos. No necesitas tarjeta de crédito para comenzar.
+      </p>
+
+      <div class="mt-7 flex justify-center sm:mt-8">
+        <a href="#hero" class="inline-flex min-h-14 items-center justify-center gap-1 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-bg transition-[background-color,box-shadow,transform] duration-300 hover:bg-primary/90 hover:shadow-[0_0_25px_rgba(212,239,92,0.2)] sm:min-h-[60px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base">
+          <span>Comienza Ahora</span>
+          <QrCodeIcon class="h-[24px] w-[24px] sm:h-[24px] sm:w-[24px]" fill="currentColor" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

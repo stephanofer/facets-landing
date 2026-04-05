@@ -5,22 +5,21 @@ import UserCircleIcon from "../assets/icons/user-circle.svg";
 ---
 
 <header id="main-header" class="fixed top-0 left-0 right-0 z-50">
-  <div class="header-bg absolute inset-0 bg-bg/80 backdrop-blur-md border-b border-white/5"></div>
-  <div class="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
+  <div id="header-shell" class="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
     <!-- Logo -->
     <a href="/" class="flex-shrink-0 relative z-10 block">
       <img src={logo.src} alt="Facetas" width={logo.width} height={logo.height} loading="eager" decoding="async" class="block h-7 md:h-8 w-auto" />
     </a>
 
     <!-- Desktop Nav -->
-    <nav class="hidden md:flex items-center gap-8">
+    <nav class="hidden md:flex relative z-10 items-center gap-8">
       <a href="#features" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Funciones</a>
       <a href="#pricing" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Precios</a>
       <a href="#about" class="nav-link text-sm text-white/70 hover:text-white transition-colors duration-300">Nosotros</a>
     </nav>
 
     <!-- Desktop CTA -->
-    <div class="hidden md:flex items-center gap-5">
+    <div class="hidden md:flex relative z-10 items-center gap-5">
       <a href="#signin" class="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors duration-300">
         <SignInIcon class="h-4 w-4 shrink-0" fill="currentColor" />
         Iniciar sesión
@@ -32,7 +31,7 @@ import UserCircleIcon from "../assets/icons/user-circle.svg";
     </div>
 
     <!-- Mobile Hamburger -->
-    <button id="menu-toggle" class="md:hidden relative z-10 w-10 h-10 flex items-center justify-center" aria-label="Abrir menú">
+    <button id="menu-toggle" class="md:hidden relative z-10 w-10 h-10 flex items-center justify-center" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false">
       <div class="relative w-6 h-5">
         <span id="bar1" class="absolute left-0 top-0 w-full h-[2px] bg-white rounded-full"></span>
         <span id="bar2" class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-white rounded-full"></span>
@@ -42,7 +41,7 @@ import UserCircleIcon from "../assets/icons/user-circle.svg";
   </div>
 
   <!-- Mobile Menu Overlay -->
-  <div id="mobile-menu" class="md:hidden fixed inset-0 top-16 pointer-events-none z-40">
+  <div id="mobile-menu" class="md:hidden fixed inset-x-0 bottom-0 top-16 pointer-events-none z-40 transition-[top] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
     <div id="menu-backdrop" class="absolute inset-0 bg-bg/98 backdrop-blur-xl opacity-0"></div>
     <div class="relative h-full flex flex-col justify-between px-6 pt-8 pb-10">
       <nav class="flex flex-col gap-1">
@@ -73,7 +72,7 @@ import UserCircleIcon from "../assets/icons/user-circle.svg";
   const bar1 = document.getElementById("bar1")!;
   const bar2 = document.getElementById("bar2")!;
   const bar3 = document.getElementById("bar3")!;
-  const mobileLinks = document.querySelectorAll(".mobile-link");
+  const mobileLinks = Array.from(document.querySelectorAll<HTMLElement>(".mobile-link"));
   const mobileCta = document.querySelector(".mobile-cta")!;
 
   let isOpen = false;
@@ -82,6 +81,9 @@ import UserCircleIcon from "../assets/icons/user-circle.svg";
   function openMenu() {
     isOpen = true;
     mobileMenu.classList.remove("pointer-events-none");
+    document.body.style.overflow = "hidden";
+    toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-label", "Cerrar menú");
 
     if (menuTl) menuTl.kill();
     menuTl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
@@ -101,6 +103,9 @@ import UserCircleIcon from "../assets/icons/user-circle.svg";
 
   function closeMenu() {
     isOpen = false;
+    document.body.style.overflow = "";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Abrir menú");
 
     if (menuTl) menuTl.kill();
     menuTl = gsap.timeline({
@@ -133,6 +138,11 @@ import UserCircleIcon from "../assets/icons/user-circle.svg";
   toggle.addEventListener("click", () => {
     if (isOpen) closeMenu();
     else openMenu();
+  });
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isOpen) {
+      closeMenu();
+    }
   });
 
   mobileMenu.querySelectorAll("a").forEach((link) => {
