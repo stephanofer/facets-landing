@@ -7,25 +7,367 @@ const navLinks = [
   { href: "#why-facets", label: "Ventajas" },
 ];
 ---
-<header id="main-header" class="fixed top-0 left-0 right-0 z-50">
-  <div id="header-shell" class="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-6 lg:h-20 lg:px-8">
-    <a href="/" class="relative z-10 block flex-shrink-0">
-      <img src={logo.src} alt="Facets" width={logo.width} height={logo.height} loading="eager" decoding="async" class="block h-7 w-auto md:h-8" />
-    </a>
 
-    <nav class="relative z-10 hidden items-center gap-6 md:flex lg:gap-8">
-      {
-        navLinks.map((link) => (
-          <a href={link.href} class="nav-link text-sm text-white/70 transition-colors duration-300 hover:text-white">
-            {link.label}
-          </a>
-        ))
-      }
-    </nav>
+<header class="header-base absolute inset-x-0 top-0 z-40">
+  <div class="header-wrap">
+    <div class="header-surface header-surface--base">
+      <a href="/" class="header-logo relative z-10 block flex-shrink-0">
+        <img src={logo.src} alt="Facets" width={logo.width} height={logo.height} loading="eager" decoding="async" class="block h-7 w-auto md:h-8" />
+      </a>
 
-    <div class="relative z-10 inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">
-      <GlobeIcon class="h-4 w-4 shrink-0" fill="currentColor" />
-      <span>ES</span>
+      <nav class="header-nav relative z-10 hidden items-center gap-6 md:flex lg:gap-8">
+        {
+          navLinks.map((link) => (
+            <a href={link.href} class="nav-link text-sm text-white/70 transition-colors duration-300 hover:text-white">
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="header-pill relative z-10 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3.5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">
+        <GlobeIcon class="h-4 w-4 shrink-0" fill="currentColor" />
+        <span>ES</span>
+      </div>
     </div>
   </div>
 </header>
+
+<div id="floating-header" class="header-floating fixed inset-x-0 top-0 z-50" data-state="hidden" aria-hidden="true" inert>
+  <div class="header-wrap header-wrap--floating">
+    <div class="header-surface-anchor">
+      <div class="header-surface header-surface--floating">
+        <a href="/" class="header-logo relative z-10 block flex-shrink-0">
+          <img src={logo.src} alt="Facets" width={logo.width} height={logo.height} loading="eager" decoding="async" class="block h-7 w-auto md:h-8" />
+        </a>
+
+        <nav class="header-nav relative z-10 hidden items-center gap-6 md:flex lg:gap-8">
+          {
+            navLinks.map((link) => (
+              <a href={link.href} class="nav-link text-sm text-white/70 transition-colors duration-300 hover:text-white">
+                {link.label}
+              </a>
+            ))
+          }
+        </nav>
+
+        <div class="header-pill header-pill--floating relative z-10 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-2 text-sm font-medium text-white/90">
+          <GlobeIcon class="h-4 w-4 shrink-0" fill="currentColor" />
+          <span>ES</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .header-wrap {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .header-wrap--floating {
+    padding-top: 0.7rem;
+  }
+
+  .header-surface {
+    position: relative;
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-inline: 1rem;
+  }
+
+  .header-surface--base::after {
+    content: "";
+    position: absolute;
+    inset: -0.35rem -0.75rem auto;
+    height: 5.5rem;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  .header-surface-anchor {
+    position: relative;
+  }
+
+  .header-surface--floating {
+    min-height: 4rem;
+    padding-inline: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 1.5rem;
+    background: rgba(12, 14, 18, 0.72);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.22),
+      0 10px 24px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .header-surface--floating > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-surface--floating::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 36%, rgba(255, 255, 255, 0.01) 100%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01) 44%, rgba(255, 255, 255, 0.02) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .header-surface--floating::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 18%, transparent 42%),
+      radial-gradient(110% 130% at 100% 0%, rgba(212, 239, 92, 0.08) 0%, transparent 34%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .header-pill {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .header-pill--floating {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 8px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .header-floating {
+    --header-merge-progress: 1;
+    opacity: 0;
+    top: calc(-4.5rem - 0.85rem);
+    transition:
+      opacity 380ms cubic-bezier(0.16, 1, 0.3, 1),
+      top 560ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity;
+  }
+
+  .header-floating[data-state="visible"] {
+    opacity: var(--header-merge-progress);
+    top: 0;
+    pointer-events: auto;
+  }
+
+  .header-floating[data-state="hidden"] {
+    pointer-events: none;
+  }
+
+  .header-nav .nav-link,
+  .header-pill,
+  .header-logo img {
+    transition:
+      opacity 260ms ease,
+      color 260ms ease;
+  }
+
+  .header-floating[data-state="visible"] .header-logo img,
+  .header-floating[data-state="visible"] .header-nav .nav-link,
+  .header-floating[data-state="visible"] .header-pill {
+    opacity: var(--header-merge-progress);
+  }
+
+  @media (min-width: 640px) {
+    .header-wrap {
+      padding-inline: 1.5rem;
+    }
+
+    .header-wrap--floating {
+      padding-top: 0.85rem;
+    }
+
+    .header-surface--floating {
+      border-radius: 1.65rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .header-wrap {
+      padding-inline: 2rem;
+    }
+
+    .header-surface {
+      min-height: 5rem;
+    }
+
+    .header-surface--floating {
+      border-radius: 1.8rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-floating {
+      transition: opacity 180ms ease;
+    }
+
+    .header-floating[data-state="hidden"] {
+      opacity: 0;
+    }
+
+    .header-floating[data-state="visible"] {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const floatingHeader = document.getElementById("floating-header");
+
+    if (!floatingHeader) return;
+
+    const SHOW_AFTER = 132;
+    const HIDE_NEAR_TOP = 56;
+    const MERGE_START = 144;
+    const DIRECTION_DELTA = 7;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let lastScrollY = Math.max(window.scrollY, 0);
+    let isVisible = false;
+    let ticking = false;
+    let lastMergeProgress = -1;
+
+    const syncAccessibility = (visible) => {
+      floatingHeader.setAttribute("aria-hidden", visible ? "false" : "true");
+
+      if (visible) {
+        floatingHeader.removeAttribute("inert");
+        return;
+      }
+
+      floatingHeader.setAttribute("inert", "");
+    };
+
+    const setVisible = (visible, force = false) => {
+      if (!force && visible === isVisible) return;
+
+      isVisible = visible;
+      floatingHeader.dataset.state = visible ? "visible" : "hidden";
+      syncAccessibility(visible);
+    };
+
+    const updateMergeProgress = (currentScrollY) => {
+      if (currentScrollY <= HIDE_NEAR_TOP) {
+        if (lastMergeProgress !== 0) {
+          floatingHeader.style.setProperty("--header-merge-progress", "0");
+          lastMergeProgress = 0;
+        }
+        return;
+      }
+
+      if (currentScrollY >= MERGE_START) {
+        if (lastMergeProgress !== 1) {
+          floatingHeader.style.setProperty("--header-merge-progress", "1");
+          lastMergeProgress = 1;
+        }
+        return;
+      }
+
+      const progress = (currentScrollY - HIDE_NEAR_TOP) / (MERGE_START - HIDE_NEAR_TOP);
+      const normalizedProgress = Number(progress.toFixed(3));
+
+      if (normalizedProgress === lastMergeProgress) return;
+
+      floatingHeader.style.setProperty("--header-merge-progress", normalizedProgress.toString());
+      lastMergeProgress = normalizedProgress;
+    };
+
+    const evaluateHeader = ({ forceReveal = false } = {}) => {
+      const currentScrollY = Math.max(window.scrollY, 0);
+      const delta = currentScrollY - lastScrollY;
+      const isNearTop = currentScrollY <= HIDE_NEAR_TOP;
+      const isScrollingDown = delta > DIRECTION_DELTA;
+      const isScrollingUp = delta < -DIRECTION_DELTA;
+
+      let nextVisibleState = isVisible;
+
+      if (isNearTop) {
+        nextVisibleState = false;
+      } else if (forceReveal && currentScrollY > HIDE_NEAR_TOP) {
+        nextVisibleState = true;
+      } else if (isScrollingUp && currentScrollY > HIDE_NEAR_TOP) {
+        nextVisibleState = true;
+      } else if (isScrollingDown && currentScrollY > SHOW_AFTER) {
+        nextVisibleState = false;
+      }
+
+      updateMergeProgress(currentScrollY);
+      lastScrollY = currentScrollY;
+      setVisible(nextVisibleState);
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+
+      ticking = true;
+
+      window.requestAnimationFrame(() => {
+        evaluateHeader();
+        ticking = false;
+      });
+    };
+
+    const revealOnInitialScroll = () => {
+      lastScrollY = Math.max(window.scrollY, 0);
+
+      updateMergeProgress(lastScrollY);
+
+      if (lastScrollY <= HIDE_NEAR_TOP) {
+        setVisible(false, true);
+        return;
+      }
+
+      if (prefersReducedMotion.matches) {
+        setVisible(true, true);
+        return;
+      }
+
+      setVisible(false, true);
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          evaluateHeader({ forceReveal: true });
+        });
+      });
+    };
+
+    syncAccessibility(false);
+    revealOnInitialScroll();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener(
+      "resize",
+      () => {
+        lastScrollY = Math.max(window.scrollY, 0);
+        evaluateHeader({ forceReveal: lastScrollY > SHOW_AFTER });
+      },
+      { passive: true }
+    );
+    window.addEventListener(
+      "pageshow",
+      () => {
+        revealOnInitialScroll();
+      },
+      { passive: true }
+    );
+  })();
+</script>
