@@ -1,0 +1,575 @@
+---
+import qrCode from "@/assets/qrcode.avif";
+---
+
+<div
+  id="qr-modal"
+  class="qr-modal-overlay"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Descargar Facets"
+>
+  <div class="qr-modal-backdrop" data-qr-close></div>
+
+  <div class="qr-modal-container">
+    <!-- Decorative phone icon (sibling of card so card can overflow:hidden for shimmer) -->
+    <div class="qr-modal-phone" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+        <path d="M176 16H80a24 24 0 0 0-24 24v176a24 24 0 0 0 24 24h96a24 24 0 0 0 24-24V40a24 24 0 0 0-24-24m8 200a8 8 0 0 1-8 8H80a8 8 0 0 1-8-8V40a8 8 0 0 1 8-8h96a8 8 0 0 1 8 8ZM140 60a12 12 0 1 1-12-12 12 12 0 0 1 12 12" />
+      </svg>
+    </div>
+
+    <div class="qr-modal-card">
+      <!-- Top accent line -->
+      <div class="qr-modal-accent" aria-hidden="true"></div>
+
+      <!-- Close button -->
+      <button class="qr-modal-close" data-qr-close aria-label="Cerrar">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Content -->
+      <div class="qr-modal-body">
+        <h3 class="qr-modal-title">
+          Escanea el QR<br />para descargar
+        </h3>
+
+        <div class="qr-modal-qr-ring">
+          <img
+            src={qrCode.src}
+            alt="Código QR para descargar Facets"
+            class="qr-modal-qr"
+            width={qrCode.width}
+            height={qrCode.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <p class="qr-modal-cta">Comienza gratis</p>
+        <p class="qr-modal-hint">Apunta la cámara de tu móvil al código</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ═══════════════════════════════════════════
+     OVERLAY
+     ═══════════════════════════════════════════ */
+  .qr-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════════
+     BACKDROP
+     ═══════════════════════════════════════════ */
+  .qr-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    cursor: pointer;
+  }
+
+  /* ═══════════════════════════════════════════
+     CONTAINER (positions phone + card)
+     ═══════════════════════════════════════════ */
+  .qr-modal-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+    padding: 1.25rem;
+  }
+
+  /* ═══════════════════════════════════════════
+     CARD
+     ═══════════════════════════════════════════ */
+  .qr-modal-card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(24, 24, 27, 0.94);
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 1.75rem;
+    padding: 2.5rem 2rem 2rem;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.04),
+      0 30px 60px -12px rgba(0, 0, 0, 0.65),
+      0 0 100px rgba(212, 239, 92, 0.03);
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+    transition:
+      opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Shimmer sweep on open */
+  .qr-modal-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.03) 45%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.03) 55%,
+      transparent 60%
+    );
+    transform: translateX(-120%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Top accent line */
+  .qr-modal-accent {
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(212, 239, 92, 0.25),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease 0.25s;
+  }
+
+  /* ═══════════════════════════════════════════
+     OPEN STATE
+     ═══════════════════════════════════════════ */
+  .qr-modal-overlay.is-open {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-backdrop {
+    opacity: 1;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-card {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-card::after {
+    animation: shimmer 1s ease 0.35s forwards;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-accent {
+    opacity: 1;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(120%); }
+  }
+
+  /* ═══════════════════════════════════════════
+     CLOSING STATE
+     ═══════════════════════════════════════════ */
+  .qr-modal-overlay.is-closing .qr-modal-backdrop {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.05s;
+  }
+
+  .qr-modal-overlay.is-closing .qr-modal-card {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.28s cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  .qr-modal-overlay.is-closing .qr-modal-accent {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  /* ═══════════════════════════════════════════
+     CLOSE BUTTON
+     ═══════════════════════════════════════════ */
+  .qr-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .qr-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+    transform: scale(1.05);
+  }
+
+  .qr-modal-close:active {
+    transform: scale(0.95);
+  }
+
+  /* ═══════════════════════════════════════════
+     PHONE DECORATIVE
+     ═══════════════════════════════════════════ */
+  .qr-modal-phone {
+    position: absolute;
+    top: 8px;
+    left: 40px;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    color: var(--color-primary);
+    filter: drop-shadow(0 0 10px rgba(212, 239, 92, 0.15));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .qr-modal-phone svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-phone {
+    opacity: 0.6;
+    transition: opacity 0.5s ease 0.4s;
+    animation: phoneBounce 2.8s ease-in-out 0.7s infinite;
+  }
+
+  .qr-modal-overlay.is-closing .qr-modal-phone {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    animation: none;
+  }
+
+  @keyframes phoneBounce {
+    0%, 100% {
+      transform: translateY(0) rotate(-12deg);
+    }
+    35% {
+      transform: translateY(-16px) rotate(-6deg);
+    }
+    55% {
+      transform: translateY(-4px) rotate(-10deg);
+    }
+    75% {
+      transform: translateY(-10px) rotate(-8deg);
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     BODY
+     ═══════════════════════════════════════════ */
+  .qr-modal-body {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  /* ═══════════════════════════════════════════
+     STAGGER ELEMENTS (base = quick out)
+     ═══════════════════════════════════════════ */
+  .qr-modal-badge,
+  .qr-modal-title,
+  .qr-modal-qr-ring,
+  .qr-modal-cta,
+  .qr-modal-hint {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  /* Staggered reveal on open */
+  .qr-modal-overlay.is-open .qr-modal-badge {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease 0.12s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease 0.18s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.18s;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-qr-ring {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 0.45s ease 0.26s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.26s;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-cta {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease 0.34s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.34s;
+  }
+
+  .qr-modal-overlay.is-open .qr-modal-hint {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease 0.40s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.40s;
+  }
+
+  /* ═══════════════════════════════════════════
+     BADGE
+     ═══════════════════════════════════════════ */
+  .qr-modal-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: rgba(212, 239, 92, 0.08);
+    border: 1px solid rgba(212, 239, 92, 0.12);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  /* ═══════════════════════════════════════════
+     TITLE
+     ═══════════════════════════════════════════ */
+  .qr-modal-title {
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: white;
+    margin: 0 0 1.75rem;
+  }
+
+  /* ═══════════════════════════════════════════
+     QR RING
+     ═══════════════════════════════════════════ */
+  .qr-modal-qr-ring {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 1.15rem;
+    margin-bottom: 1.5rem;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 40px rgba(212, 239, 92, 0.06);
+    transform: translateY(10px) scale(0.96);
+  }
+
+  .qr-modal-qr-ring::before {
+    content: "";
+    position: absolute;
+    inset: -24px;
+    border-radius: 2rem;
+    background: radial-gradient(
+      circle,
+      rgba(212, 239, 92, 0.05) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .qr-modal-qr {
+    display: block;
+    width: 180px;
+    height: 180px;
+    border-radius: 0.5rem;
+    image-rendering: crisp-edges;
+  }
+
+  /* ═══════════════════════════════════════════
+     CTA + HINT
+     ═══════════════════════════════════════════ */
+  .qr-modal-cta {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0 0 0.35rem;
+  }
+
+  .qr-modal-hint {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0;
+  }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE – SMALL
+     ═══════════════════════════════════════════ */
+  @media (max-width: 480px) {
+    .qr-modal-container {
+      padding: 1rem;
+    }
+
+    .qr-modal-card {
+      padding: 2.25rem 1.5rem 1.75rem;
+      border-radius: 1.5rem;
+    }
+
+    .qr-modal-title {
+      font-size: 1.35rem;
+    }
+
+    .qr-modal-qr {
+      width: 155px;
+      height: 155px;
+    }
+
+    .qr-modal-qr-ring {
+      padding: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .qr-modal-phone {
+      width: 36px;
+      height: 36px;
+      top: 6px;
+      left: 28px;
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE – MEDIUM+
+     ═══════════════════════════════════════════ */
+  @media (min-width: 640px) {
+    .qr-modal-container {
+      max-width: 440px;
+    }
+
+    .qr-modal-card {
+      padding: 3rem 2.5rem 2.5rem;
+    }
+
+    .qr-modal-title {
+      font-size: 1.85rem;
+    }
+
+    .qr-modal-qr {
+      width: 200px;
+      height: 200px;
+    }
+
+    .qr-modal-qr-ring {
+      padding: 1.15rem;
+    }
+
+    .qr-modal-phone {
+      width: 52px;
+      height: 52px;
+      top: 6px;
+      left: 44px;
+    }
+  }
+</style>
+
+<script>
+  const modal = document.getElementById("qr-modal");
+  if (modal) {
+    const closeTriggers = modal.querySelectorAll("[data-qr-close]");
+    const openTriggers = document.querySelectorAll("[data-open-qr-modal]");
+    let isAnimating = false;
+    let savedScrollY = 0;
+
+    function lockScroll() {
+      savedScrollY = window.scrollY;
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.top = `-${savedScrollY}px`;
+    }
+
+    function unlockScroll() {
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
+      window.scrollTo(0, savedScrollY);
+    }
+
+    function openModal() {
+      if (isAnimating || modal.classList.contains("is-open")) return;
+      isAnimating = true;
+      modal.classList.remove("is-closing");
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      lockScroll();
+
+      const closeBtn = modal.querySelector(".qr-modal-close") as HTMLElement;
+      setTimeout(() => {
+        closeBtn?.focus();
+        isAnimating = false;
+      }, 500);
+    }
+
+    function closeModal() {
+      if (isAnimating || !modal.classList.contains("is-open")) return;
+      isAnimating = true;
+      modal.classList.add("is-closing");
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      unlockScroll();
+
+      setTimeout(() => {
+        modal.classList.remove("is-closing");
+        isAnimating = false;
+      }, 350);
+    }
+
+    openTriggers.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    closeTriggers.forEach((btn) => {
+      btn.addEventListener("click", closeModal);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+  }
+</script>
